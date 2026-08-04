@@ -364,6 +364,7 @@
     .hero-media{order:-1;}
   }
   @media (max-width:700px){
+    header{position:static;}
     .audience-card:nth-child(odd),.audience-card:nth-child(even){margin:0;}
     .day-sign{margin:0 !important;}
     .mobile-cta{display:block;}
@@ -800,14 +801,14 @@
     var masonryItems = Array.prototype.slice.call(reviewsMasonry.children);
     var masonryCols = 0;
     var ROTATIONS = [-2.2, 1.6, -1, 2.4, -1.7, 1.1, -2.6];
-    masonryItems.forEach(function(item, idx){
-      item.style.transform = 'rotate(' + ROTATIONS[idx % ROTATIONS.length] + 'deg)';
-    });
 
     var layoutMasonry = function(){
       var cols = window.innerWidth <= 700 ? 2 : 3;
       if (cols === masonryCols) return;
       masonryCols = cols;
+      masonryItems.forEach(function(item, idx){
+        item.style.transform = cols >= 3 ? ('rotate(' + ROTATIONS[idx % ROTATIONS.length] + 'deg)') : 'none';
+      });
       reviewsMasonry.innerHTML = '';
       var colEls = [];
       for (var i = 0; i < cols; i++){
