@@ -1,0 +1,11 @@
+.DS_Store
+
+# Unused source/raw assets (not referenced by index.html)
+videos/
+images/1.png
+images/2.PNG
+images/hero.png
+images/video-poster-01.jpg
+images/video-poster-02.jpg
+images/video-poster-03.jpg
+images/video-poster-04.jpg
