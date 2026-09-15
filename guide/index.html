@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Свой первый AI-мультфильм — гайд от Марины</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1A1613;
+    --bg-alt:#241F1B;
+    --card:#2B2420;
+    --gold:#D9A857;
+    --gold-dim:#B98F45;
+    --ivory:#F5EDE1;
+    --ivory-dim:#C9BFB2;
+    --green:#5C6E4C;
+    --wood:#8B6F47;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ivory);
+    font-family:'Onest',system-ui,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  [data-lang][hidden]{display:none !important;}
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  section{position:relative;padding:88px 24px;max-width:1080px;margin:0 auto;}
+  h1,h2,h3{font-weight:700;letter-spacing:-0.01em;}
+
+  /* ---------- LANGUAGE GATE ---------- */
+  .lang-gate{
+    position:fixed;inset:0;z-index:200;
+    background:var(--bg);
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .45s ease, visibility .45s ease;
+  }
+  .lang-gate.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  .lang-gate-inner{text-align:center;}
+  .lang-gate-mark{
+    width:56px;height:56px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--gold) 0%, var(--gold-dim) 70%);
+    margin:0 auto 28px;
+    box-shadow:0 0 40px rgba(217,168,87,.45);
+  }
+  .lang-gate-title{font-size:15px;color:var(--ivory-dim);margin-bottom:22px;letter-spacing:.02em;}
+  .lang-choices{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  .lang-btn{
+    font-family:inherit;font-size:17px;font-weight:600;
+    padding:16px 34px;border-radius:999px;
+    border:1.5px solid rgba(217,168,87,.5);
+    background:transparent;color:var(--ivory);
+    cursor:pointer;transition:background .2s, border-color .2s, transform .2s;
+  }
+  .lang-btn:hover{background:rgba(217,168,87,.12);border-color:var(--gold);transform:translateY(-1px);}
+
+  /* ---------- STICKY BAR ---------- */
+  .sticky-bar{
+    position:fixed;left:0;right:0;bottom:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;padding:14px 22px;
+    background:rgba(26,22,19,.92);backdrop-filter:blur(8px);
+    border-top:1px solid rgba(217,168,87,.25);
+    transform:translateY(110%);transition:transform .35s ease;
+  }
+  .sticky-bar.show{transform:translateY(0);}
+  .sticky-bar span{font-size:14px;color:var(--ivory-dim);}
+  .sticky-bar strong{color:var(--gold);}
+
+  /* ---------- BUTTONS ---------- */
+  .btn-gold{
+    display:inline-block;
+    background:linear-gradient(135deg,var(--gold),var(--gold-dim));
+    color:#1A1613;font-weight:700;font-size:16px;
+    padding:15px 30px;border-radius:999px;
+    box-shadow:0 6px 22px rgba(217,168,87,.28);
+    transition:transform .18s ease, box-shadow .18s ease;
+    white-space:nowrap;
+  }
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(217,168,87,.4);}
+  .btn-gold.small{padding:10px 20px;font-size:14px;flex-shrink:0;}
+  button.btn-gold{border:none;font-family:inherit;cursor:pointer;}
+
+  /* ---------- GLOW ---------- */
+  .glow{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;}
+  .glow-hero{width:520px;height:520px;background:rgba(217,168,87,.28);top:-120px;right:-100px;}
+  .glow-trust{width:420px;height:420px;background:rgba(92,110,76,.28);left:-120px;top:20%;}
+  .glow-final{width:480px;height:480px;background:rgba(217,168,87,.22);left:50%;top:-140px;transform:translateX(-50%);}
+
+  /* ---------- WAVE DIVIDER ---------- */
+  .wave{display:flex;align-items:flex-end;justify-content:center;gap:5px;height:28px;margin:0 auto;opacity:.75;}
+  .wave span{width:3px;background:var(--gold-dim);border-radius:2px;}
+  .wave span:nth-child(1){height:8px;} .wave span:nth-child(2){height:18px;}
+  .wave span:nth-child(3){height:26px;} .wave span:nth-child(4){height:14px;}
+  .wave span:nth-child(5){height:22px;} .wave span:nth-child(6){height:10px;}
+  .wave span:nth-child(7){height:20px;} .wave span:nth-child(8){height:16px;}
+  .wave span:nth-child(9){height:24px;} .wave span:nth-child(10){height:9px;}
+  .wave span:nth-child(11){height:15px;}
+
+  /* ---------- HERO ---------- */
+  .hero{padding-top:64px;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;position:relative;z-index:1;}
+  .hero-text h1{font-size:44px;line-height:1.12;margin-bottom:20px;color:var(--ivory);
+    animation:riseIn .7s ease both;}
+  .hero-text p{font-size:17px;color:var(--ivory-dim);margin-bottom:28px;max-width:480px;
+    animation:riseIn .7s .1s ease both;}
+  .price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:26px;
+    animation:riseIn .7s .18s ease both;}
+  .price-row .price{font-size:28px;font-weight:800;color:var(--gold);}
+  .price-row .price-note{font-size:14px;color:var(--ivory-dim);}
+  .hero-text > a{animation:riseIn .7s .26s ease both;}
+  .use-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;animation:riseIn .7s .32s ease both;}
+  .use-tag{
+    font-size:13px;color:var(--ivory-dim);
+    padding:9px 16px;border-radius:999px;
+    border:1px solid rgba(217,168,87,.32);
+    background:rgba(217,168,87,.06);
+    white-space:nowrap;
+  }
+  .hero-image{position:relative;animation:heroFade 1s ease both;display:flex;justify-content:center;}
+  .hero-image::before{
+    content:'';position:absolute;inset:-16px;
+    background:radial-gradient(circle at 50% 40%, rgba(217,168,87,.35), transparent 65%);
+    filter:blur(30px);z-index:-1;
+  }
+  .hero-image img{
+    width:100%;max-width:480px;aspect-ratio:1/1;
+    object-fit:cover;object-position:50% 30%;
+    border-radius:50%;
+    border:2px solid rgba(217,168,87,.4);
+    box-shadow:0 0 0 14px rgba(217,168,87,.06);
+  }
+  @keyframes riseIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes heroFade{from{opacity:0;transform:scale(.96);}to{opacity:1;transform:scale(1);}}
+
+  /* ---------- PAIN ---------- */
+  .pain{max-width:680px;text-align:center;padding:64px 24px;}
+  .pain p{font-size:19px;color:var(--ivory-dim);}
+  .pain p + p{margin-top:14px;color:var(--ivory);}
+
+  /* ---------- INSIDE ---------- */
+  .inside h2{font-size:30px;text-align:center;margin-bottom:44px;}
+  .frame-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .frame-card{
+    position:relative;background:var(--card);
+    border:1px solid rgba(217,168,87,.32);border-radius:var(--radius);
+    padding:26px 20px 22px;
+  }
+  .frame-card::before,.frame-card::after{
+    content:'';position:absolute;top:9px;width:6px;height:6px;border-radius:50%;
+    background:rgba(217,168,87,.4);
+  }
+  .frame-card::before{left:9px;} .frame-card::after{right:9px;}
+  .frame-card .wave{justify-content:flex-start;height:16px;margin-bottom:14px;transform:scale(.7);transform-origin:left;}
+  .frame-card p{font-size:15px;color:var(--ivory-dim);}
+
+  /* ---------- TRUST ---------- */
+  .trust{display:grid;grid-template-columns:.85fr 1.15fr;gap:44px;align-items:center;}
+  .trust-text p{font-size:18px;color:var(--ivory);position:relative;z-index:1;}
+  .trust-text p + p{margin-top:14px;font-size:15px;color:var(--ivory-dim);}
+
+  /* ---------- RESULTS (student videos) ---------- */
+  .results-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:10px;
+    position:relative;z-index:1;
+  }
+  .result-card{
+    position:relative;overflow:hidden;aspect-ratio:16/9;
+    border-radius:var(--radius);border:1px solid rgba(217,168,87,.32);
+    background:var(--card);cursor:pointer;
+    transition:border-color .2s;
+  }
+  .result-card video{width:100%;height:100%;object-fit:cover;display:block;}
+  .result-card .sound-icon{
+    position:absolute;right:8px;bottom:8px;width:24px;height:24px;border-radius:50%;
+    background:rgba(26,22,19,.72);border:1px solid rgba(217,168,87,.4);
+    display:flex;align-items:center;justify-content:center;font-size:11px;
+    transition:background .2s,border-color .2s;
+  }
+  .result-card.sound-on{border-color:var(--gold);}
+  .result-card.sound-on .sound-icon{background:var(--gold);border-color:var(--gold);}
+
+  /* ---------- PAYWALL MODAL ---------- */
+  .paywall-modal{
+    position:fixed;inset:0;z-index:300;
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;
+    opacity:0;visibility:hidden;
+    transition:opacity .25s ease, visibility .25s ease;
+  }
+  .paywall-modal.show{opacity:1;visibility:visible;}
+  .paywall-backdrop{
+    position:absolute;inset:0;
+    background:rgba(10,8,6,.72);backdrop-filter:blur(2px);
+  }
+  .paywall-card{
+    position:relative;z-index:1;width:100%;max-width:420px;
+    max-height:calc(100vh - 40px);overflow-y:auto;
+    background:var(--card);
+    border:1px solid rgba(217,168,87,.32);
+    border-radius:20px;
+    padding:36px 32px 32px;
+    transform:translateY(12px) scale(.98);
+    transition:transform .25s ease;
+  }
+  .paywall-modal.show .paywall-card{transform:translateY(0) scale(1);}
+  .paywall-card h3{font-size:24px;margin-bottom:10px;padding-right:20px;}
+  .paywall-sub{font-size:14px;color:var(--ivory-dim);margin-bottom:22px;line-height:1.5;}
+  .paywall-close{
+    position:absolute;top:18px;right:18px;width:32px;height:32px;border-radius:50%;
+    background:rgba(217,168,87,.12);border:1px solid rgba(217,168,87,.3);
+    color:var(--ivory);font-size:18px;line-height:1;font-family:inherit;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+  }
+  .paywall-price{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--gold),var(--gold-dim));
+    color:#1A1613;font-size:26px;font-weight:800;
+    padding:14px 30px;border-radius:999px;margin-bottom:26px;
+  }
+  .paywall-check{
+    display:flex;align-items:flex-start;gap:12px;
+    margin-bottom:16px;cursor:pointer;
+  }
+  .paywall-check input{
+    appearance:none;-webkit-appearance:none;
+    width:20px;height:20px;flex-shrink:0;margin-top:1px;
+    border:1.5px solid rgba(217,168,87,.5);border-radius:6px;
+    background:transparent;cursor:pointer;position:relative;
+    transition:background .15s, border-color .15s;
+  }
+  .paywall-check input:checked{background:var(--gold);border-color:var(--gold);}
+  .paywall-check input:checked::after{
+    content:'';position:absolute;left:5px;top:1px;width:6px;height:11px;
+    border:solid #1A1613;border-width:0 2px 2px 0;transform:rotate(45deg);
+  }
+  .paywall-check span{font-size:14px;color:var(--ivory-dim);line-height:1.5;}
+  .paywall-check a{color:var(--gold);text-decoration:underline;text-underline-offset:2px;}
+  .paywall-submit{width:100%;margin-top:8px;text-align:center;}
+  .paywall-submit:disabled{opacity:.4;cursor:not-allowed;box-shadow:none;}
+  .paywall-submit:disabled:hover{transform:none;box-shadow:none;}
+
+  /* ---------- TICKET ---------- */
+  .ticket{
+    display:grid;grid-template-columns:1.4fr .9fr;
+    background:var(--card);border-radius:16px;overflow:hidden;
+    border:1px solid rgba(217,168,87,.3);
+  }
+  .ticket-left{padding:38px 34px;}
+  .ticket-left h3{font-size:22px;margin-bottom:20px;}
+  .ticket-left ul li{font-size:15px;color:var(--ivory-dim);padding-left:22px;position:relative;margin-bottom:12px;}
+  .ticket-left ul li::before{content:'';position:absolute;left:0;top:7px;width:9px;height:9px;border-radius:2px;background:var(--gold-dim);}
+  .ticket-stub{
+    position:relative;padding:38px 30px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;
+    background:rgba(217,168,87,.06);
+  }
+  .ticket-stub::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;
+    border-left:2px dashed rgba(217,168,87,.4);
+  }
+  .ticket-stub::after{
+    content:'';position:absolute;left:-11px;top:50%;transform:translateY(-50%);
+    width:22px;height:22px;border-radius:50%;background:var(--bg);
+    box-shadow:0 -140px 0 -2px var(--bg), 0 140px 0 -2px var(--bg);
+  }
+  .price-big{font-size:34px;font-weight:800;color:var(--gold);}
+  .ticket-note{font-size:13px;color:var(--ivory-dim);text-align:center;margin-top:16px;}
+
+  /* ---------- FAQ ---------- */
+  .faq h2{font-size:30px;text-align:center;margin-bottom:36px;}
+  details{
+    border-bottom:1px solid rgba(217,168,87,.2);padding:18px 0;
+  }
+  summary{
+    display:flex;align-items:center;gap:14px;cursor:pointer;
+    font-size:16px;font-weight:600;list-style:none;
+  }
+  summary::-webkit-details-marker{display:none;}
+  .avatar-m{
+    flex-shrink:0;width:28px;height:28px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--gold), var(--gold-dim));
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:800;color:#1A1613;
+  }
+  summary .chev{margin-left:auto;color:var(--gold-dim);transition:transform .25s ease;font-size:14px;}
+  details[open] summary .chev{transform:rotate(180deg);}
+  details p{margin-top:12px;padding-left:42px;font-size:15px;color:var(--ivory-dim);}
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{text-align:center;padding-bottom:130px;}
+  .final-cta h2{font-size:34px;margin-bottom:12px;position:relative;z-index:1;}
+  .final-cta p{font-size:16px;color:var(--ivory-dim);margin-bottom:30px;position:relative;z-index:1;}
+  .final-cta a{position:relative;z-index:1;}
+
+  /* ---------- LEGAL FOOTER ---------- */
+  .legal-footer{
+    text-align:center;padding:26px 24px 100px;
+    border-top:1px solid rgba(217,168,87,.18);
+  }
+  .foot-links{
+    display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center;
+    margin-bottom:14px;
+  }
+  .foot-links a{font-size:12px;color:var(--ivory-dim);opacity:.75;transition:opacity .2s;}
+  .foot-links a:hover{opacity:1;color:var(--gold);}
+  .legal-footer p{font-size:12px;line-height:1.6;color:var(--ivory-dim);opacity:.75;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-image{order:-1;max-width:340px;margin:0 auto;}
+    .hero-text h1{font-size:32px;}
+    .frame-grid{grid-template-columns:1fr 1fr;}
+    .trust{grid-template-columns:1fr;}
+    .ticket{grid-template-columns:1fr;}
+    .ticket-stub::before{display:none;}
+    .ticket-stub::after{display:none;}
+  }
+  @media (max-width:520px){
+    .frame-grid{grid-template-columns:1fr;}
+    section{padding:60px 20px;}
+    .sticky-bar span{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- LANGUAGE GATE -->
+<div class="lang-gate" id="langGate">
+  <div class="lang-gate-inner">
+    <div class="lang-gate-mark"></div>
+    <div class="lang-gate-title">Choose your language / Выберите язык</div>
+    <div class="lang-choices">
+      <button class="lang-btn" data-choose="ru">RU · Русский</button>
+      <button class="lang-btn" data-choose="en">EN · English</button>
+    </div>
+  </div>
+</div>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar" id="stickyBar">
+  <span data-lang="ru">Гайд «Свой первый AI-мультфильм» — <strong>590 ₽</strong></span>
+  <span data-lang="en" hidden>"Your First AI Cartoon" guide — <strong>$15</strong></span>
+  <button type="button" class="btn-gold small buy-btn" data-lang="ru">Купить</button>
+  <button type="button" class="btn-gold small buy-btn" data-lang="en" hidden>Buy now</button>
+</div>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="glow glow-hero"></div>
+    <div class="hero-grid">
+      <div class="hero-text">
+        <h1 data-lang="ru">Создай свой первый AI-мультфильм — уже сегодня</h1>
+        <h1 data-lang="en" hidden>Make your first AI cartoon — tonight</h1>
+
+        <p data-lang="ru">Пошаговый гайд: от идеи до готового ролика с твоими персонажами. Без опыта, без монтажа, без технических знаний — только телефон и нейросети. С нуля.</p>
+        <p data-lang="en" hidden>A step-by-step guide: from idea to a finished clip with characters that stay consistent in every frame. No experience, no editing software, no tech skills — just your phone and AI. From scratch.</p>
+
+        <div class="price-row">
+          <span class="price" data-lang="ru">590 ₽</span>
+          <span class="price" data-lang="en" hidden>$15</span>
+          <span class="price-note" data-lang="ru">· доступ сразу после оплаты</span>
+          <span class="price-note" data-lang="en" hidden>· instant access after payment</span>
+        </div>
+
+        <button type="button" class="btn-gold buy-btn" data-lang="ru">Хочу свой мультфильм →</button>
+        <button type="button" class="btn-gold buy-btn" data-lang="en" hidden>I want my cartoon →</button>
+
+        <div class="use-tags">
+          <span class="use-tag" data-lang="ru">🎨 Для себя — контент, подарки, соцсети</span>
+          <span class="use-tag" data-lang="en" hidden>🎨 For yourself — content, gifts, social media</span>
+          <span class="use-tag" data-lang="ru">💰 Для заработка — бери заказы на мультфильмы</span>
+          <span class="use-tag" data-lang="en" hidden>💰 For income — take on client orders</span>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="images/marina1.png" alt="Marina">
+      </div>
+    </div>
+  </section>
+
+  <div class="wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+  <!-- PAIN -->
+  <section class="pain">
+    <p data-lang="ru">Видишь в ленте забавных мультяшных персонажей и думаешь — «это точно долго и сложно, не для меня»?</p>
+    <p data-lang="ru">На деле — один вечер и твоя идея. Всё остальное уже придумано за тебя: два наших авторских бота-помощника с неограниченным доступом сами превращают твои мысли в готовый результат. Тебе останется только описать, что хочешь увидеть, — своими словами.</p>
+
+    <p data-lang="en" hidden>See cute animated characters in your feed and think "that has to be complicated — not for me"?</p>
+    <p data-lang="en" hidden>It's actually just one evening and your idea. We've already figured out the rest: two of our own custom bots with unlimited access turn your thoughts into a finished result. All you do is describe what you want to see — in your own words.</p>
+  </section>
+
+  <div class="wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+  <!-- WHAT'S INSIDE -->
+  <section class="inside">
+    <h2 data-lang="ru">Что ты получишь</h2>
+    <h2 data-lang="en" hidden>What you'll get</h2>
+    <div class="frame-grid">
+      <div class="frame-card">
+        <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+        <p data-lang="ru">Как быстро подключить всё нужное — с телефона, без айтишного бэкграунда</p>
+        <p data-lang="en" hidden>How to set everything up in minutes — right from your phone, no tech background needed</p>
+      </div>
+      <div class="frame-card">
+        <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+        <p data-lang="ru">Как стабильно получать чёткие промпты, не подбирая слова руками, — это делают наши авторские боты-помощники</p>
+        <p data-lang="en" hidden>How to get clean, precise prompts without writing them yourself — our custom bots do it for you</p>
+      </div>
+      <div class="frame-card">
+        <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+        <p data-lang="ru">Как создать персонажа, который выглядит одинаково в каждом кадре</p>
+        <p data-lang="en" hidden>How to build a character that looks the same in every single frame</p>
+      </div>
+      <div class="frame-card">
+        <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+        <p data-lang="ru">16 готовых визуальных стилей на любой вкус — от кино-3D до пластилина</p>
+        <p data-lang="en" hidden>16 ready-made visual styles for any taste — from cinematic 3D to claymation</p>
+      </div>
+      <div class="frame-card">
+        <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+        <p data-lang="ru">Как добавить в мультфильм себя, ребёнка, питомца или свою квартиру</p>
+        <p data-lang="en" hidden>How to bring yourself, your kid, your pet, or your home into the cartoon</p>
+      </div>
+      <div class="frame-card">
+        <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+        <p data-lang="ru">Как за пару кликов оживить кадры и получить готовое видео</p>
+        <p data-lang="en" hidden>How to bring your frames to life and get a finished video in a couple of clicks</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="trust">
+    <div class="glow glow-trust"></div>
+    <div class="results-grid">
+      <div class="result-card">
+        <video src="students/IMG_6590.MP4" poster="students/posters/poster-6590.jpg" muted autoplay loop playsinline preload="auto"></video>
+        <span class="sound-icon">🔇</span>
+      </div>
+      <div class="result-card">
+        <video src="students/IMG_6600.MP4" poster="students/posters/poster-6600.jpg" muted autoplay loop playsinline preload="auto"></video>
+        <span class="sound-icon">🔇</span>
+      </div>
+      <div class="result-card">
+        <video src="students/video.MP4" poster="students/posters/poster-video.jpg" muted autoplay loop playsinline preload="auto"></video>
+        <span class="sound-icon">🔇</span>
+      </div>
+      <div class="result-card">
+        <video src="students/video1.MP4" poster="students/posters/poster-video1.jpg" muted autoplay loop playsinline preload="auto"></video>
+        <span class="sound-icon">🔇</span>
+      </div>
+    </div>
+    <div class="trust-text">
+      <p data-lang="ru">Мы это уже проверяли. Наши ученики делают результаты, которые удивляют даже нас — без всякого опыта, за считанные дни.</p>
+      <p data-lang="ru">Гайд написан просто и по шагам, как для человека, который нейросети в глаза не видел.</p>
+
+      <p data-lang="en" hidden>We've already tested this. Our students get results that surprise even us — with zero experience, in just a few days.</p>
+      <p data-lang="en" hidden>This guide is written simply, step by step, for someone who's never touched AI before.</p>
+    </div>
+  </section>
+
+  <!-- TICKET / PRICE -->
+  <section class="ticket-section">
+    <div class="ticket">
+      <div class="ticket-left">
+        <h3 data-lang="ru">590 ₽ — полная пошаговая инструкция для создания мультфильмов</h3>
+        <h3 data-lang="en" hidden>For $15 — everything you need for your first cartoon</h3>
+        <ul>
+          <li data-lang="ru">Полный пошаговый гайд: текст + видео</li>
+          <li data-lang="en" hidden>The full step-by-step guide: text + video</li>
+          <li data-lang="ru">Доступ к двум авторским ботам-помощникам с неограниченным доступом</li>
+          <li data-lang="en" hidden>Access to two custom bots with unlimited use</li>
+          <li data-lang="ru">16 готовых стилей мультфильма на любой вкус</li>
+          <li data-lang="en" hidden>16 ready-made cartoon styles for any taste</li>
+          <li data-lang="ru">Доступ в закрытый Telegram-канал — мгновенно после оплаты, навсегда</li>
+          <li data-lang="en" hidden>Access to the private Telegram channel — instantly after payment, forever</li>
+        </ul>
+      </div>
+      <div class="ticket-stub">
+        <span class="price-big" data-lang="ru">590 ₽</span>
+        <span class="price-big" data-lang="en" hidden>$15</span>
+        <button type="button" class="btn-gold buy-btn" data-lang="ru">Купить гайд</button>
+        <button type="button" class="btn-gold buy-btn" data-lang="en" hidden>Get the guide</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <h2 data-lang="ru">Вопросы</h2>
+    <h2 data-lang="en" hidden>FAQ</h2>
+
+    <details>
+      <summary><span class="avatar-m">M</span><span data-lang="ru">Нужен ли опыт в нейросетях?</span><span data-lang="en" hidden>Do I need any experience with AI?</span><span class="chev">▾</span></summary>
+      <p data-lang="ru">Нет. Всё расписано по шагам — от регистрации до готового видео. Если умеешь пользоваться телефоном, справишься.</p>
+      <p data-lang="en" hidden>No. Everything is laid out step by step — from sign-up to finished video. If you can use a phone, you can do this.</p>
+    </details>
+
+    <details>
+      <summary><span class="avatar-m">M</span><span data-lang="ru">590 ₽ — и больше платить не придётся?</span><span data-lang="en" hidden>Is $15 the only thing I'll pay?</span><span class="chev">▾</span></summary>
+      <p data-lang="ru">За гайд — да, разово. Но для генерации самого мультфильма понадобится подписка Syntx AI Bot (от 1600 ₽/мес) — это отдельный сервис, где живут нужные нейросети. В гайде подробно объясняем, какой тариф выбрать и почему. ChatGPT — по желанию, можно пользоваться и бесплатной версией.</p>
+      <p data-lang="en" hidden>For the guide — yes, one-time. But actually generating the cartoon requires a Syntx AI Bot subscription (separate service where the AI tools live) — the guide explains exactly which plan to pick and why. ChatGPT is optional — the free version works fine too.</p>
+    </details>
+
+    <details>
+      <summary><span class="avatar-m">M</span><span data-lang="ru">Я не знаю английский, как мне писать промпты?</span><span data-lang="en" hidden>Do I need to know how to write AI prompts?</span><span class="chev">▾</span></summary>
+      <p data-lang="ru">Тебе не придётся делать это руками. Мы создали своих авторских ботов-помощников, которые сами превращают твою идею в промпт. От тебя нужна только идея — простыми словами, на родном языке.</p>
+      <p data-lang="en" hidden>No — our custom bots handle that part. You just describe your idea in plain English, and they turn it into a precise prompt for the AI tools.</p>
+    </details>
+
+    <details>
+      <summary><span class="avatar-m">M</span><span data-lang="ru">Как я получу доступ?</span><span data-lang="en" hidden>How do I get access?</span><span class="chev">▾</span></summary>
+      <p data-lang="ru">Сразу после оплаты — ссылка/бот пришлёт доступ в закрытый канал с гайдом.</p>
+      <p data-lang="en" hidden>Right after payment — a bot will instantly send you access to the private channel with the guide.</p>
+    </details>
+
+    <details>
+      <summary><span class="avatar-m">M</span><span data-lang="ru">Сколько времени это займёт?</span><span data-lang="en" hidden>How long does it take?</span><span class="chev">▾</span></summary>
+      <p data-lang="ru">Один вечер. Если делать без спешки — 1-2 часа от идеи до готового ролика.</p>
+      <p data-lang="en" hidden>One evening. Taking your time, it's about 1-2 hours from idea to finished video.</p>
+    </details>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="glow glow-final"></div>
+    <h2 data-lang="ru">Погнали?</h2>
+    <h2 data-lang="en" hidden>Ready?</h2>
+    <p data-lang="ru">Твой первый AI-мультфильм ближе, чем кажется.</p>
+    <p data-lang="en" hidden>Your first AI cartoon is closer than you think.</p>
+    <button type="button" class="btn-gold buy-btn" data-lang="ru">Хочу свой мультфильм за 590 ₽</button>
+    <button type="button" class="btn-gold buy-btn" data-lang="en" hidden>Get my cartoon for $15</button>
+  </section>
+
+</main>
+
+<footer class="legal-footer">
+  <div class="foot-links">
+    <a href="https://disk.yandex.ru/i/VoNTVrWU4zdSXg" target="_blank" rel="noopener" data-lang="ru">Оферта</a>
+    <a href="https://disk.yandex.ru/i/VoNTVrWU4zdSXg" target="_blank" rel="noopener" data-lang="en" hidden>Offer</a>
+    <a href="https://disk.yandex.ru/i/BCgMlQ4pQnt_fA" target="_blank" rel="noopener" data-lang="ru">Политика конфиденциальности</a>
+    <a href="https://disk.yandex.ru/i/BCgMlQ4pQnt_fA" target="_blank" rel="noopener" data-lang="en" hidden>Privacy Policy</a>
+    <a href="https://disk.yandex.ru/i/Z7zMqhKcqi_vUw" target="_blank" rel="noopener" data-lang="ru">Согласие на обработку ПДн</a>
+    <a href="https://disk.yandex.ru/i/Z7zMqhKcqi_vUw" target="_blank" rel="noopener" data-lang="en" hidden>Data Processing Consent</a>
+    <a href="https://disk.yandex.ru/i/sKWfqkvDy2lTZQ" target="_blank" rel="noopener" data-lang="ru">Согласие на рассылку</a>
+    <a href="https://disk.yandex.ru/i/sKWfqkvDy2lTZQ" target="_blank" rel="noopener" data-lang="en" hidden>Mailing Consent</a>
+  </div>
+  <p data-lang="ru">Смирская И.&nbsp;К., плательщик налога на профессиональный доход (НПД).<br>ИНН 616712253559</p>
+  <p data-lang="en" hidden>Smirskaya I.&nbsp;K., self-employed taxpayer (NPD) under Russian law.<br>Tax ID (INN) 616712253559</p>
+</footer>
+
+<!-- PAYWALL MODAL -->
+<div class="paywall-modal" id="paywallModal">
+  <div class="paywall-backdrop" data-close></div>
+  <div class="paywall-card" role="dialog" aria-modal="true" aria-labelledby="paywallTitle">
+    <button type="button" class="paywall-close" data-close aria-label="Закрыть">×</button>
+
+    <h3 id="paywallTitle" data-lang="ru">Почти всё готово</h3>
+    <h3 data-lang="en" hidden>Almost there</h3>
+
+    <p class="paywall-sub" data-lang="ru">Имя, телефон и почту укажешь на следующем шаге — на защищённой странице оплаты.</p>
+    <p class="paywall-sub" data-lang="en" hidden>You'll enter your name, phone and email on the next step — on the secure payment page.</p>
+
+    <div class="paywall-price">
+      <span data-lang="ru">590 ₽</span>
+      <span data-lang="en" hidden>$15</span>
+    </div>
+
+    <label class="paywall-check">
+      <input type="checkbox" data-required>
+      <span data-lang="ru">Принимаю условия <a href="https://disk.yandex.ru/i/VoNTVrWU4zdSXg" target="_blank" rel="noopener">публичной оферты</a></span>
+      <span data-lang="en" hidden>I accept the terms of the <a href="https://disk.yandex.ru/i/VoNTVrWU4zdSXg" target="_blank" rel="noopener">public offer</a></span>
+    </label>
+
+    <label class="paywall-check">
+      <input type="checkbox" data-required>
+      <span data-lang="ru">Даю <a href="https://disk.yandex.ru/i/Z7zMqhKcqi_vUw" target="_blank" rel="noopener">согласие на обработку персональных данных</a> и принимаю <a href="https://disk.yandex.ru/i/BCgMlQ4pQnt_fA" target="_blank" rel="noopener">политику конфиденциальности</a></span>
+      <span data-lang="en" hidden>I give <a href="https://disk.yandex.ru/i/Z7zMqhKcqi_vUw" target="_blank" rel="noopener">consent to personal data processing</a> and accept the <a href="https://disk.yandex.ru/i/BCgMlQ4pQnt_fA" target="_blank" rel="noopener">privacy policy</a></span>
+    </label>
+
+    <label class="paywall-check">
+      <input type="checkbox">
+      <span data-lang="ru">Даю <a href="https://disk.yandex.ru/i/sKWfqkvDy2lTZQ" target="_blank" rel="noopener">согласие на рассылку</a> информационных и рекламных сообщений</span>
+      <span data-lang="en" hidden>I agree to receive <a href="https://disk.yandex.ru/i/sKWfqkvDy2lTZQ" target="_blank" rel="noopener">informational and promotional messages</a></span>
+    </label>
+
+    <button type="button" class="btn-gold paywall-submit" disabled>
+      <span data-lang="ru">Перейти к оплате</span>
+      <span data-lang="en" hidden>Proceed to payment</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  var gate = document.getElementById('langGate');
+  var stickyBar = document.getElementById('stickyBar');
+
+  function setLang(lang){
+    document.documentElement.setAttribute('lang', lang);
+    document.querySelectorAll('[data-lang]').forEach(function(el){
+      if(el.getAttribute('data-lang') === lang){ el.removeAttribute('hidden'); }
+      else{ el.setAttribute('hidden',''); }
+    });
+    try{ localStorage.setItem('site_lang', lang); }catch(e){}
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      setLang(btn.getAttribute('data-choose'));
+      gate.classList.add('hidden');
+    });
+  });
+
+  // Skip the gate on repeat visits
+  try{
+    var saved = localStorage.getItem('site_lang');
+    if(saved){ setLang(saved); gate.classList.add('hidden'); }
+  }catch(e){}
+
+  // Sticky bar after hero
+  var hero = document.querySelector('.hero');
+  window.addEventListener('scroll', function(){
+    var trigger = hero.offsetTop + hero.offsetHeight;
+    if(window.scrollY > trigger){ stickyBar.classList.add('show'); }
+    else{ stickyBar.classList.remove('show'); }
+  });
+
+  // Student results: click a video to hear it, mutes the rest
+  document.querySelectorAll('.result-card').forEach(function(card){
+    var vid = card.querySelector('video');
+    var icon = card.querySelector('.sound-icon');
+
+    // Some browsers/sandboxes ignore the autoplay attribute — retry via JS.
+    var tryPlay = function(){ vid.play().catch(function(){}); };
+    tryPlay();
+    vid.addEventListener('loadeddata', tryPlay, { once:true });
+
+    card.addEventListener('click', function(){
+      var turnOn = vid.muted;
+      document.querySelectorAll('.result-card').forEach(function(c){
+        c.querySelector('video').muted = true;
+        c.classList.remove('sound-on');
+        c.querySelector('.sound-icon').textContent = '🔇';
+      });
+      if(turnOn){
+        vid.muted = false;
+        card.classList.add('sound-on');
+        icon.textContent = '🔊';
+      }
+      vid.play().catch(function(){});
+    });
+  });
+
+  // Paywall modal: requires offer + data-consent checkboxes before payment
+  (function(){
+    var modal = document.getElementById('paywallModal');
+    var submitBtn = modal.querySelector('.paywall-submit');
+    var requiredChecks = Array.prototype.slice.call(modal.querySelectorAll('input[data-required]'));
+    var paymentLinks = { ru: 'https://payform.ru/r4cyNlR/', en: 'https://payform.ru/5kcyNod/' };
+
+    function updateSubmitState(){
+      submitBtn.disabled = !requiredChecks.every(function(cb){ return cb.checked; });
+    }
+    requiredChecks.forEach(function(cb){ cb.addEventListener('change', updateSubmitState); });
+
+    function openModal(){
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(){
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.buy-btn').forEach(function(btn){
+      btn.addEventListener('click', openModal);
+    });
+    modal.querySelectorAll('[data-close]').forEach(function(el){
+      el.addEventListener('click', closeModal);
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && modal.classList.contains('show')){ closeModal(); }
+    });
+
+    submitBtn.addEventListener('click', function(){
+      if(submitBtn.disabled) return;
+      var lang = document.documentElement.getAttribute('lang') === 'en' ? 'en' : 'ru';
+      window.location.href = paymentLinks[lang];
+    });
+  })();
+</script>
+
+</body>
+</html>
