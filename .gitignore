@@ -1,7 +1,7 @@
 .DS_Store
 
 # Unused source/raw assets (not referenced by index.html)
-videos/
+/videos/
 images/1.png
 images/2.PNG
 images/hero.png
