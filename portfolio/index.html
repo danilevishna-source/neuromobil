@@ -407,14 +407,64 @@
     position:absolute; top:24px; right:32px; color:var(--ivory);
     font-size:28px; cursor:pointer; background:none; border:none; font-family:inherit;
   }
+
+  /* ---------- LANGUAGE ---------- */
+  .nav-right{ display:flex; align-items:center; gap:16px; }
+  .lang-switch{ display:flex; gap:6px; }
+  .lang-switch-btn{
+    font-size:12px; font-weight:600; color:var(--ivory-dim);
+    border:1px solid var(--line); background:none; cursor:pointer;
+    padding:6px 10px; font-family:inherit; transition:border-color .2s, color .2s;
+  }
+  .lang-switch-btn:hover{ color:var(--ivory); border-color:var(--gold); }
+  .lang-switch-btn.active{ color:var(--graphite); background:var(--gold); border-color:var(--gold); }
+
+  .lang-overlay{
+    position:fixed; inset:0; z-index:300; background:rgba(10,8,6,0.96);
+    display:none; align-items:center; justify-content:center; padding:32px;
+  }
+  .lang-overlay.open{ display:flex; }
+  .lang-box{ text-align:center; }
+  .lang-title{
+    font-size:clamp(15px,2.2vw,20px); color:var(--ivory-dim); margin-bottom:32px; line-height:1.8;
+  }
+  .lang-buttons{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+  .lang-btn{
+    font-size:16px; font-weight:700; letter-spacing:.04em; color:var(--ivory);
+    border:1px solid var(--gold); background:none; cursor:pointer;
+    padding:16px 36px; font-family:inherit; transition:background .2s, color .2s;
+  }
+  .lang-btn:hover{ background:var(--gold); color:var(--graphite); }
+  @media(max-width:480px){
+    .lang-switch-btn{ padding:5px 8px; font-size:11px; }
+  }
 </style>
 </head>
 <body>
 
 <nav class="nav">
   <div class="logo">НЕЙРО.<span>Н</span></div>
-  <a class="nav-cta" href="#cta">Обсудить проект</a>
+  <div class="nav-right">
+    <div class="lang-switch">
+      <button class="lang-switch-btn" data-lang="en">EN</button>
+      <button class="lang-switch-btn" data-lang="ru">RU</button>
+      <button class="lang-switch-btn" data-lang="es">ES</button>
+    </div>
+    <a class="nav-cta" data-i18n="nav_cta" href="#cta">Обсудить проект</a>
+  </div>
 </nav>
+
+<!-- ================= LANGUAGE OVERLAY ================= -->
+<div class="lang-overlay" id="langOverlay">
+  <div class="lang-box">
+    <div class="lang-title">Choose your language<br>Выберите язык<br>Elige tu idioma</div>
+    <div class="lang-buttons">
+      <button class="lang-btn" data-lang="en">ENG</button>
+      <button class="lang-btn" data-lang="ru">RUS</button>
+      <button class="lang-btn" data-lang="es">ESP</button>
+    </div>
+  </div>
+</div>
 
 <!-- ================= HERO ================= -->
 <header class="hero">
@@ -422,17 +472,17 @@
     <video id="heroVideo" autoplay muted loop playsinline preload="auto" src="videos/main.mp4"></video>
   </div>
   <div class="wrap hero-content">
-    <div class="hero-eyebrow">AI-видеопродакшн для брендов и личных задач</div>
-    <h1>Любой продукт. Любой жанр. Один бриф — готовый ролик.</h1>
-    <p>Мультфильмы, реализм, фэнтези — делаем видео нейросетями под вашу нишу, от идеи до монтажа.</p>
+    <div class="hero-eyebrow" data-i18n="hero_eyebrow">AI-видеопродакшн для брендов и личных задач</div>
+    <h1 data-i18n="hero_h1">Любой продукт. Любой жанр. Один бриф — готовый ролик.</h1>
+    <p data-i18n="hero_p">Мультфильмы, реализм, фэнтези — делаем видео нейросетями под вашу нишу, от идеи до монтажа.</p>
     <div class="hero-actions">
-      <a class="btn-primary" href="#cta">Обсудить проект</a>
-      <a class="btn-ghost" href="#works">Смотреть работы</a>
+      <a class="btn-primary" data-i18n="nav_cta" href="#cta">Обсудить проект</a>
+      <a class="btn-ghost" data-i18n="hero_btn_secondary" href="#works">Смотреть работы</a>
     </div>
     <div class="stats">
-      <div class="stat"><b>100 000+</b><span>подписчиков за 2 месяца — наш кейс</span></div>
-      <div class="stat"><b>100+</b><span>готовых роликов</span></div>
-      <div class="stat"><b>12+</b><span>ниш, с которыми работали</span></div>
+      <div class="stat"><b data-i18n="stat1_number">100 000+</b><span data-i18n="stat1_label">подписчиков за 2 месяца — наш кейс</span></div>
+      <div class="stat"><b>100+</b><span data-i18n="stat2_label">готовых роликов</span></div>
+      <div class="stat"><b>12+</b><span data-i18n="stat3_label">ниш, с которыми работали</span></div>
     </div>
   </div>
 </header>
@@ -440,24 +490,24 @@
 <!-- ================= NICHES ================= -->
 <section class="niches">
   <div class="wrap">
-    <span class="niches-label">Работали с нишами:</span>
+    <span class="niches-label" data-i18n="niches_label">Работали с нишами:</span>
     <div class="chip-rows">
       <div class="chip-row">
-        <span class="chip">Ювелирка</span>
-        <span class="chip">Фармацевтика</span>
-        <span class="chip">Логистика</span>
-        <span class="chip">Недвижимость</span>
-        <span class="chip">Напитки</span>
-        <span class="chip">Авто</span>
-        <span class="chip">Товарка</span>
+        <span class="chip" data-i18n="chip_jewelry">Ювелирка</span>
+        <span class="chip" data-i18n="chip_pharma_full">Фармацевтика</span>
+        <span class="chip" data-i18n="niche_logistics">Логистика</span>
+        <span class="chip" data-i18n="chip_realestate">Недвижимость</span>
+        <span class="chip" data-i18n="niche_drinks">Напитки</span>
+        <span class="chip" data-i18n="niche_auto">Авто</span>
+        <span class="chip" data-i18n="chip_ecommerce">Товарка</span>
       </div>
       <div class="chip-row">
-        <span class="chip">Гемблинг</span>
-        <span class="chip">Свадьбы и корпоративы</span>
-        <span class="chip">Соцролики</span>
-        <span class="chip">Строительство</span>
-        <span class="chip">Fashion</span>
-        <span class="chip">Студии красоты</span>
+        <span class="chip" data-i18n="chip_gambling">Гемблинг</span>
+        <span class="chip" data-i18n="chip_weddings">Свадьбы и корпоративы</span>
+        <span class="chip" data-i18n="niche_social">Соцролики</span>
+        <span class="chip" data-i18n="niche_construction">Строительство</span>
+        <span class="chip" data-i18n="niche_fashion">Fashion</span>
+        <span class="chip" data-i18n="chip_beauty">Студии красоты</span>
       </div>
     </div>
   </div>
@@ -467,13 +517,13 @@
 <section class="flagship">
   <div class="wrap flagship-grid">
     <div>
-      <div class="flagship-tag">Флагманский кейс</div>
-      <h2>Аккаунт, который мы ведём сами</h2>
-      <p><a href="https://instagram.com/neuro.mobil" target="_blank" rel="noopener" class="ig-btn">@neuro.mobil</a> — AI-мультфильмы, которые мы делаем и публикуем каждый день. Это не заказ, а наш собственный продукт. Результат говорит сам за себя.</p>
-      <div class="flagship-num">100 000</div>
-      <div class="flagship-num-label">подписчиков за 2 месяца</div>
+      <div class="flagship-tag" data-i18n="flagship_tag">Флагманский кейс</div>
+      <h2 data-i18n="flagship_h2">Аккаунт, который мы ведём сами</h2>
+      <p data-i18n-html="flagship_p_html"><a href="https://instagram.com/neuro.mobil" target="_blank" rel="noopener" class="ig-btn">@neuro.mobil</a> — AI-мультфильмы, которые мы делаем и публикуем каждый день. Это не заказ, а наш собственный продукт. Результат говорит сам за себя.</p>
+      <div class="flagship-num" data-i18n="flagship_num">100 000</div>
+      <div class="flagship-num-label" data-i18n="flagship_num_label">подписчиков за 2 месяца</div>
       <div class="hero-actions" style="margin-top:28px;">
-        <a class="btn-primary" href="https://instagram.com/neuro.mobil" target="_blank" rel="noopener">Смотреть аккаунт</a>
+        <a class="btn-primary" data-i18n="flagship_btn" href="https://instagram.com/neuro.mobil" target="_blank" rel="noopener">Смотреть аккаунт</a>
       </div>
     </div>
     <div class="flagship-reels">
@@ -488,105 +538,105 @@
 <section id="works">
   <div class="wrap">
     <div class="gallery-head">
-      <h2>Работы</h2>
+      <h2 data-i18n="gallery_h2">Работы</h2>
     </div>
 
     <div class="featured-row">
       <div class="featured-card">
         <video src="videos/portfolio/BEST/IMG_3434.mp4" autoplay muted loop playsinline preload="auto"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Напитки</span><span class="card-genre">Реализм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_drinks">Напитки</span><span class="card-genre" data-i18n="genre_realism">Реализм</span></div>
       </div>
       <div class="featured-card">
         <video src="videos/portfolio/BEST/IMG_4425.mp4" autoplay muted loop playsinline preload="auto"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Логистика</span><span class="card-genre">Реализм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_logistics">Логистика</span><span class="card-genre" data-i18n="genre_realism">Реализм</span></div>
       </div>
       <div class="featured-card">
         <video src="videos/portfolio/BEST/IMG_0927.mp4" autoplay muted loop playsinline preload="auto"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Игровое</span><span class="card-genre">Реализм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_gaming">Игровое</span><span class="card-genre" data-i18n="genre_realism">Реализм</span></div>
       </div>
     </div>
 
-    <div class="rest-label">Часть наших работ</div>
+    <div class="rest-label" data-i18n="rest_label">Часть наших работ</div>
     <div class="wide-row">
       <div class="wide-card">
         <video src="videos/portfolio/IMG_3953.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_3953.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Соцролики</span><span class="card-genre">Реализм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_social">Соцролики</span><span class="card-genre" data-i18n="genre_realism">Реализм</span></div>
       </div>
       <div class="wide-card">
         <video src="videos/portfolio/IMG_3874.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_3874.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Fashion</span><span class="card-genre">Фэнтези</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_fashion">Fashion</span><span class="card-genre" data-i18n="genre_fantasy">Фэнтези</span></div>
       </div>
       <div class="wide-card">
         <video src="videos/portfolio/IMG_4108.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_4108.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Ивент</span><span class="card-genre">Реализм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_event">Ивент</span><span class="card-genre" data-i18n="genre_realism">Реализм</span></div>
       </div>
     </div>
     <div class="grid" id="grid">
       <div class="card">
         <video src="videos/portfolio/IMG_0608.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_0608.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Фарма</span><span class="card-genre">Реализм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_pharma">Фарма</span><span class="card-genre" data-i18n="genre_realism">Реализм</span></div>
       </div>
       <div class="card">
         <video src="videos/portfolio/IMG_0607.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_0607.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Логистика</span><span class="card-genre">Мультфильм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_logistics">Логистика</span><span class="card-genre" data-i18n="genre_cartoon">Мультфильм</span></div>
       </div>
       <div class="card">
         <video src="videos/portfolio/IMG_8555.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_8555.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Строительство</span><span class="card-genre">Реализм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_construction">Строительство</span><span class="card-genre" data-i18n="genre_realism">Реализм</span></div>
       </div>
       <div class="card">
         <video src="videos/portfolio/IMG_4070.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_4070.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Игровое</span><span class="card-genre">Реализм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_gaming">Игровое</span><span class="card-genre" data-i18n="genre_realism">Реализм</span></div>
       </div>
       <div class="card">
         <video src="videos/portfolio/IMG_3153.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_3153.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Игровое</span><span class="card-genre">Фэнтези</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_gaming">Игровое</span><span class="card-genre" data-i18n="genre_fantasy">Фэнтези</span></div>
       </div>
       <div class="card">
         <video src="videos/portfolio/IMG_4334.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_4334.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Сниппет</span><span class="card-genre">Реализм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_snippet">Сниппет</span><span class="card-genre" data-i18n="genre_realism">Реализм</span></div>
       </div>
       <div class="card">
         <video src="videos/portfolio/IMG_4987.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_4987.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Логистика</span><span class="card-genre">Фэнтези</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_logistics">Логистика</span><span class="card-genre" data-i18n="genre_fantasy">Фэнтези</span></div>
       </div>
       <div class="card">
         <video src="videos/portfolio/IMG_3557.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_3557.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Спорт</span><span class="card-genre">Реализм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_sport">Спорт</span><span class="card-genre" data-i18n="genre_realism">Реализм</span></div>
       </div>
       <div class="card">
         <video src="videos/portfolio/IMG_4626.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_4626.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Спорт</span><span class="card-genre">Реализм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_sport">Спорт</span><span class="card-genre" data-i18n="genre_realism">Реализм</span></div>
       </div>
       <div class="card">
         <video src="videos/portfolio/IMG_6037.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_6037.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Спорт</span><span class="card-genre">Реализм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_sport">Спорт</span><span class="card-genre" data-i18n="genre_realism">Реализм</span></div>
       </div>
       <div class="card">
         <video src="videos/portfolio/IMG_9303.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_9303.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Спорт</span><span class="card-genre">Реализм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_sport">Спорт</span><span class="card-genre" data-i18n="genre_realism">Реализм</span></div>
       </div>
       <div class="card">
         <video src="videos/portfolio/IMG_5487.mp4" muted loop playsinline preload="metadata" poster="videos/portfolio/posters/IMG_5487.jpg"></video>
         <span class="expand-badge">⛶</span>
-        <div class="card-overlay"><span class="card-niche">Авто</span><span class="card-genre">Реализм</span></div>
+        <div class="card-overlay"><span class="card-niche" data-i18n="niche_auto">Авто</span><span class="card-genre" data-i18n="genre_realism">Реализм</span></div>
       </div>
     </div>
   </div>
@@ -596,10 +646,10 @@
 <section class="case-block">
   <div class="wrap case-grid">
     <div class="case-copy">
-      <div class="case-tag">Дополнительный кейс</div>
-      <h3 class="case-heading">Ещё один кейс, где наши ролики залетают на миллионы сами</h3>
+      <div class="case-tag" data-i18n="case_tag">Дополнительный кейс</div>
+      <h3 class="case-heading" data-i18n="case_heading">Ещё один кейс, где наши ролики залетают на миллионы сами</h3>
       <a href="https://instagram.com/cardiodok" target="_blank" rel="noopener" class="ig-btn">@cardiodok</a>
-      <div class="case-niche">фарма-ниша</div>
+      <div class="case-niche" data-i18n="case_niche">фарма-ниша</div>
     </div>
     <div class="case-row">
       <div class="card">
@@ -608,7 +658,7 @@
         <span class="expand-badge">⛶</span>
       </div>
       <div class="case-shot">
-        <img src="videos/farm/cardiodok-screenshot.png" alt="Скриншот профиля @cardiodok в Instagram">
+        <img src="videos/farm/cardiodok-screenshot.png" data-i18n-attr="alt:alt_cardiodok" alt="Скриншот профиля @cardiodok в Instagram">
       </div>
       <div class="card">
         <video src="videos/farm/IMG_4976.MP4" muted loop playsinline preload="metadata" poster="videos/farm/posters/IMG_4976.jpg"></video>
@@ -622,55 +672,55 @@
 <!-- ================= PROCESS ================= -->
 <section class="process">
   <div class="wrap">
-    <h2>Как мы работаем</h2>
+    <h2 data-i18n="process_h2">Как мы работаем</h2>
     <div class="process-row">
       <div class="process-step">
-        <div class="n">Концепция</div>
-        <h3>Разрабатываем идею</h3>
-        <p>Узнаём продукт, аудиторию и жанр. Пишем сюжет и концепцию, согласовываем референсы — до старта генерации.</p>
+        <div class="n" data-i18n="process1_n">Концепция</div>
+        <h3 data-i18n="process1_h3">Разрабатываем идею</h3>
+        <p data-i18n="process1_p">Узнаём продукт, аудиторию и жанр. Пишем сюжет и концепцию, согласовываем референсы — до старта генерации.</p>
       </div>
       <div class="process-step">
-        <div class="n">Генерация</div>
-        <h3>Создаём визуал</h3>
-        <p>Генерируем изображения с адаптацией под ваш продукт и бренд, затем — видео на их основе.</p>
+        <div class="n" data-i18n="process2_n">Генерация</div>
+        <h3 data-i18n="process2_h3">Создаём визуал</h3>
+        <p data-i18n="process2_p">Генерируем изображения с адаптацией под ваш продукт и бренд, затем — видео на их основе.</p>
       </div>
       <div class="process-step">
-        <div class="n">Монтаж и звук</div>
-        <h3>Собираем ролик</h3>
-        <p>Монтируем, делаем цветокоррекцию, подбираем и сводим звук.</p>
+        <div class="n" data-i18n="process3_n">Монтаж и звук</div>
+        <h3 data-i18n="process3_h3">Собираем ролик</h3>
+        <p data-i18n="process3_p">Монтируем, делаем цветокоррекцию, подбираем и сводим звук.</p>
       </div>
       <div class="process-step">
-        <div class="n">Правки и сдача</div>
-        <h3>Доводим до идеала</h3>
-        <p>Вносим правки по вашим комментариям и отдаём готовое видео в нужном формате.</p>
+        <div class="n" data-i18n="process4_n">Правки и сдача</div>
+        <h3 data-i18n="process4_h3">Доводим до идеала</h3>
+        <p data-i18n="process4_p">Вносим правки по вашим комментариям и отдаём готовое видео в нужном формате.</p>
       </div>
     </div>
-    <div class="process-note">Готовы подстроиться под срочность заказа. Работаем по предоплате.</div>
+    <div class="process-note" data-i18n="process_note">Готовы подстроиться под срочность заказа. Работаем по предоплате.</div>
   </div>
 </section>
 
 <!-- ================= FORMATS ================= -->
 <section class="formats">
   <div class="wrap">
-    <h2>Форматы сотрудничества</h2>
-    <p class="formats-sub">Условия адаптивны и меняются в зависимости от объёма задач — обсуждаем индивидуально под ваш проект.</p>
+    <h2 data-i18n="formats_h2">Форматы сотрудничества</h2>
+    <p class="formats-sub" data-i18n="formats_sub">Условия адаптивны и меняются в зависимости от объёма задач — обсуждаем индивидуально под ваш проект.</p>
     <div class="formats-row">
       <div class="format-card">
-        <div class="format-tag">Под ключ</div>
-        <h3>Берём проект целиком</h3>
+        <div class="format-tag" data-i18n="format1_tag">Под ключ</div>
+        <h3 data-i18n="format1_h3">Берём проект целиком</h3>
         <ul>
-          <li>От одного ролика до закрытия целого потока задач</li>
-          <li>Сами отвечаем за реализацию и контроль качества</li>
-          <li>Ведём проект от идеи до готового результата</li>
+          <li data-i18n="format1_li1">От одного ролика до закрытия целого потока задач</li>
+          <li data-i18n="format1_li2">Сами отвечаем за реализацию и контроль качества</li>
+          <li data-i18n="format1_li3">Ведём проект от идеи до готового результата</li>
         </ul>
       </div>
       <div class="format-card">
-        <div class="format-tag">Аутсорс-команда</div>
-        <h3>Даём специалистов под задачу</h3>
+        <div class="format-tag" data-i18n="format2_tag">Аутсорс-команда</div>
+        <h3 data-i18n="format2_h3">Даём специалистов под задачу</h3>
         <ul>
-          <li>Предоставляем креаторов под ваши конкретные задачи</li>
-          <li>Формат и объём работы обсуждаются индивидуально</li>
-          <li>Гибко масштабируем команду под ваш проект</li>
+          <li data-i18n="format2_li1">Предоставляем креаторов под ваши конкретные задачи</li>
+          <li data-i18n="format2_li2">Формат и объём работы обсуждаются индивидуально</li>
+          <li data-i18n="format2_li3">Гибко масштабируем команду под ваш проект</li>
         </ul>
       </div>
     </div>
@@ -680,7 +730,7 @@
 <!-- ================= TRUST ================= -->
 <section class="trust">
   <div class="wrap">
-    <div class="trust-note">За нами стоят <b><a href="https://yavneuro.ru" target="_blank" rel="noopener" class="trust-name-link">«Я В НЕЙРО!»</a></b> и <b><a href="https://neuromobil.ru" target="_blank" rel="noopener" class="trust-name-link">НЕЙРОМОБИЛЬ</a></b> — обучаем создавать такие же ролики</div>
+    <div class="trust-note" data-i18n-html="trust_note_html">За нами стоят <b><a href="https://yavneuro.ru" target="_blank" rel="noopener" class="trust-name-link">«Я В НЕЙРО!»</a></b> и <b><a href="https://neuromobil.ru" target="_blank" rel="noopener" class="trust-name-link">НЕЙРОМОБИЛЬ</a></b> — обучаем создавать такие же ролики</div>
     <div class="trust-links">
       <a href="https://instagram.com/ai_innas" target="_blank" rel="noopener" class="ig-btn">@ai_innas</a>
       <a href="https://instagram.com/neuro.mobil" target="_blank" rel="noopener" class="ig-btn">@neuro.mobil</a>
@@ -691,11 +741,11 @@
 <!-- ================= CTA ================= -->
 <section class="cta" id="cta">
   <div class="wrap">
-    <h2>Расскажите, какой хотите результат</h2>
-    <p>Ответим быстро и предложим формат под вашу задачу</p>
+    <h2 data-i18n="cta_h2">Расскажите, какой хотите результат</h2>
+    <p data-i18n="cta_p">Ответим быстро и предложим формат под вашу задачу</p>
     <div class="cta-actions">
-      <a class="btn-primary" href="https://t.me/deal_ginger" target="_blank" rel="noopener">Написать в Telegram</a>
-      <a class="btn-ghost" href="https://wa.me/79381306612" target="_blank" rel="noopener">Написать в WhatsApp</a>
+      <a class="btn-primary" data-i18n="cta_btn_telegram" href="https://t.me/deal_ginger" target="_blank" rel="noopener">Написать в Telegram</a>
+      <a class="btn-ghost" data-i18n="cta_btn_whatsapp" href="https://wa.me/79381306612" target="_blank" rel="noopener">Написать в WhatsApp</a>
     </div>
   </div>
 </section>
@@ -772,6 +822,272 @@
       lightbox.classList.add('open');
     });
   });
+
+  // ---------- LANGUAGE ----------
+  const translations = {
+    ru: {
+      meta_title: "НЕЙРО.Н — AI-видео для брендов",
+      meta_desc: "Студия AI-видео для брендов: мультфильмы, реализм, фэнтези. Ювелирка, фарма, недвижимость, напитки и другие ниши.",
+      nav_cta: "Обсудить проект",
+      hero_eyebrow: "AI-видеопродакшн для брендов и личных задач",
+      hero_h1: "Любой продукт. Любой жанр. Один бриф — готовый ролик.",
+      hero_p: "Мультфильмы, реализм, фэнтези — делаем видео нейросетями под вашу нишу, от идеи до монтажа.",
+      hero_btn_secondary: "Смотреть работы",
+      stat1_number: "100 000+",
+      stat1_label: "подписчиков за 2 месяца — наш кейс",
+      stat2_label: "готовых роликов",
+      stat3_label: "ниш, с которыми работали",
+      niches_label: "Работали с нишами:",
+      chip_jewelry: "Ювелирка",
+      chip_pharma_full: "Фармацевтика",
+      chip_realestate: "Недвижимость",
+      chip_ecommerce: "Товарка",
+      chip_gambling: "Гемблинг",
+      chip_weddings: "Свадьбы и корпоративы",
+      chip_beauty: "Студии красоты",
+      flagship_tag: "Флагманский кейс",
+      flagship_h2: "Аккаунт, который мы ведём сами",
+      flagship_p_html: '<a href="https://instagram.com/neuro.mobil" target="_blank" rel="noopener" class="ig-btn">@neuro.mobil</a> — AI-мультфильмы, которые мы делаем и публикуем каждый день. Это не заказ, а наш собственный продукт. Результат говорит сам за себя.',
+      flagship_num: "100 000",
+      flagship_num_label: "подписчиков за 2 месяца",
+      flagship_btn: "Смотреть аккаунт",
+      gallery_h2: "Работы",
+      rest_label: "Часть наших работ",
+      niche_drinks: "Напитки",
+      niche_logistics: "Логистика",
+      niche_gaming: "Игровое",
+      niche_social: "Соцролики",
+      niche_fashion: "Fashion",
+      niche_event: "Ивент",
+      niche_pharma: "Фарма",
+      niche_construction: "Строительство",
+      niche_snippet: "Сниппет",
+      niche_sport: "Спорт",
+      niche_auto: "Авто",
+      genre_realism: "Реализм",
+      genre_fantasy: "Фэнтези",
+      genre_cartoon: "Мультфильм",
+      case_tag: "Дополнительный кейс",
+      case_heading: "Ещё один кейс, где наши ролики залетают на миллионы сами",
+      case_niche: "фарма-ниша",
+      alt_cardiodok: "Скриншот профиля @cardiodok в Instagram",
+      process_h2: "Как мы работаем",
+      process1_n: "Концепция", process1_h3: "Разрабатываем идею",
+      process1_p: "Узнаём продукт, аудиторию и жанр. Пишем сюжет и концепцию, согласовываем референсы — до старта генерации.",
+      process2_n: "Генерация", process2_h3: "Создаём визуал",
+      process2_p: "Генерируем изображения с адаптацией под ваш продукт и бренд, затем — видео на их основе.",
+      process3_n: "Монтаж и звук", process3_h3: "Собираем ролик",
+      process3_p: "Монтируем, делаем цветокоррекцию, подбираем и сводим звук.",
+      process4_n: "Правки и сдача", process4_h3: "Доводим до идеала",
+      process4_p: "Вносим правки по вашим комментариям и отдаём готовое видео в нужном формате.",
+      process_note: "Готовы подстроиться под срочность заказа. Работаем по предоплате.",
+      formats_h2: "Форматы сотрудничества",
+      formats_sub: "Условия адаптивны и меняются в зависимости от объёма задач — обсуждаем индивидуально под ваш проект.",
+      format1_tag: "Под ключ", format1_h3: "Берём проект целиком",
+      format1_li1: "От одного ролика до закрытия целого потока задач",
+      format1_li2: "Сами отвечаем за реализацию и контроль качества",
+      format1_li3: "Ведём проект от идеи до готового результата",
+      format2_tag: "Аутсорс-команда", format2_h3: "Даём специалистов под задачу",
+      format2_li1: "Предоставляем креаторов под ваши конкретные задачи",
+      format2_li2: "Формат и объём работы обсуждаются индивидуально",
+      format2_li3: "Гибко масштабируем команду под ваш проект",
+      trust_note_html: 'За нами стоят <b><a href="https://yavneuro.ru" target="_blank" rel="noopener" class="trust-name-link">«Я В НЕЙРО!»</a></b> и <b><a href="https://neuromobil.ru" target="_blank" rel="noopener" class="trust-name-link">НЕЙРОМОБИЛЬ</a></b> — обучаем создавать такие же ролики',
+      cta_h2: "Расскажите, какой хотите результат",
+      cta_p: "Ответим быстро и предложим формат под вашу задачу",
+      cta_btn_telegram: "Написать в Telegram",
+      cta_btn_whatsapp: "Написать в WhatsApp"
+    },
+    en: {
+      meta_title: "NEURO.N — AI Video for Brands",
+      meta_desc: "AI video studio for brands: cartoons, realism, fantasy. Jewelry, pharma, real estate, drinks, and more.",
+      nav_cta: "Discuss a project",
+      hero_eyebrow: "AI video production for brands and personal projects",
+      hero_h1: "Any product. Any genre. One brief — one finished video.",
+      hero_p: "Cartoons, realism, fantasy — we create AI videos tailored to your niche, from concept to final edit.",
+      hero_btn_secondary: "See our work",
+      stat1_number: "100,000+",
+      stat1_label: "followers in 2 months — our own case study",
+      stat2_label: "videos delivered",
+      stat3_label: "niches we've worked with",
+      niches_label: "Niches we've worked with:",
+      chip_jewelry: "Jewelry",
+      chip_pharma_full: "Pharmaceuticals",
+      chip_realestate: "Real estate",
+      chip_ecommerce: "E-commerce",
+      chip_gambling: "Gambling",
+      chip_weddings: "Weddings & corporate events",
+      chip_beauty: "Beauty studios",
+      flagship_tag: "Flagship case",
+      flagship_h2: "The account we run ourselves",
+      flagship_p_html: '<a href="https://instagram.com/neuro.mobil" target="_blank" rel="noopener" class="ig-btn">@neuro.mobil</a> — AI cartoons we create and post every single day. This isn\'t client work — it\'s our own product. The results speak for themselves.',
+      flagship_num: "100,000",
+      flagship_num_label: "followers in 2 months",
+      flagship_btn: "View the account",
+      gallery_h2: "Work",
+      rest_label: "More of our work",
+      niche_drinks: "Drinks",
+      niche_logistics: "Logistics",
+      niche_gaming: "Gaming",
+      niche_social: "Social clips",
+      niche_fashion: "Fashion",
+      niche_event: "Events",
+      niche_pharma: "Pharma",
+      niche_construction: "Construction",
+      niche_snippet: "Snippet",
+      niche_sport: "Sports",
+      niche_auto: "Auto",
+      genre_realism: "Realism",
+      genre_fantasy: "Fantasy",
+      genre_cartoon: "Cartoon",
+      case_tag: "Bonus case",
+      case_heading: "Another case where our videos rack up millions of views on their own",
+      case_niche: "pharma niche",
+      alt_cardiodok: "Screenshot of the @cardiodok Instagram profile",
+      process_h2: "How we work",
+      process1_n: "Concept", process1_h3: "We develop the idea",
+      process1_p: "We learn about your product, audience, and genre. We write the story and concept, and lock in references — before generation even starts.",
+      process2_n: "Generation", process2_h3: "We create the visuals",
+      process2_p: "We generate images tailored to your product and brand, then turn them into video.",
+      process3_n: "Editing & sound", process3_h3: "We put it all together",
+      process3_p: "We edit, color-grade, and select and mix the sound.",
+      process4_n: "Revisions & delivery", process4_h3: "We polish it to perfection",
+      process4_p: "We make revisions based on your feedback and deliver the finished video in the format you need.",
+      process_note: "We can adapt to tight deadlines. We work on a prepayment basis.",
+      formats_h2: "Ways to work together",
+      formats_sub: "Terms are flexible and depend on the scope of work — we work them out individually for your project.",
+      format1_tag: "Full service", format1_h3: "We take on the whole project",
+      format1_li1: "From a single video to handling an entire pipeline of tasks",
+      format1_li2: "We take full responsibility for execution and quality control",
+      format1_li3: "We manage the project from idea to finished result",
+      format2_tag: "Outsourced team", format2_h3: "We provide specialists for your task",
+      format2_li1: "We provide creators for your specific needs",
+      format2_li2: "Format and workload are agreed on individually",
+      format2_li3: "We flexibly scale the team to fit your project",
+      trust_note_html: 'Backed by <b><a href="https://yavneuro.ru" target="_blank" rel="noopener" class="trust-name-link">«Я В НЕЙРО!»</a></b> and <b><a href="https://neuromobil.ru" target="_blank" rel="noopener" class="trust-name-link">NEUROMOBIL</a></b> — we also teach how to create videos just like these',
+      cta_h2: "Tell us what result you want",
+      cta_p: "We'll reply quickly and suggest the best format for your task",
+      cta_btn_telegram: "Message us on Telegram",
+      cta_btn_whatsapp: "Message us on WhatsApp"
+    },
+    es: {
+      meta_title: "NEURO.N — Video con IA para Marcas",
+      meta_desc: "Estudio de video con IA para marcas: animación, realismo, fantasía. Joyería, farmacéutica, inmobiliaria, bebidas y más.",
+      nav_cta: "Hablemos de tu proyecto",
+      hero_eyebrow: "Producción de video con IA para marcas y proyectos personales",
+      hero_h1: "Cualquier producto. Cualquier estilo. Un brief — un video listo.",
+      hero_p: "Animación, realismo, fantasía — creamos videos con IA a la medida de tu nicho, desde la idea hasta la edición final.",
+      hero_btn_secondary: "Ver nuestro trabajo",
+      stat1_number: "100.000+",
+      stat1_label: "seguidores en 2 meses — nuestro propio caso",
+      stat2_label: "videos entregados",
+      stat3_label: "nichos con los que hemos trabajado",
+      niches_label: "Nichos con los que trabajamos:",
+      chip_jewelry: "Joyería",
+      chip_pharma_full: "Farmacéutica",
+      chip_realestate: "Inmobiliaria",
+      chip_ecommerce: "E-commerce",
+      chip_gambling: "Apuestas",
+      chip_weddings: "Bodas y eventos corporativos",
+      chip_beauty: "Estudios de belleza",
+      flagship_tag: "Caso insignia",
+      flagship_h2: "La cuenta que gestionamos nosotros mismos",
+      flagship_p_html: '<a href="https://instagram.com/neuro.mobil" target="_blank" rel="noopener" class="ig-btn">@neuro.mobil</a> — animaciones con IA que creamos y publicamos todos los días. No es un encargo, es nuestro propio producto. Los resultados hablan por sí solos.',
+      flagship_num: "100.000",
+      flagship_num_label: "seguidores en 2 meses",
+      flagship_btn: "Ver la cuenta",
+      gallery_h2: "Trabajos",
+      rest_label: "Más de nuestro trabajo",
+      niche_drinks: "Bebidas",
+      niche_logistics: "Logística",
+      niche_gaming: "Juegos",
+      niche_social: "Clips para redes",
+      niche_fashion: "Moda",
+      niche_event: "Eventos",
+      niche_pharma: "Farma",
+      niche_construction: "Construcción",
+      niche_snippet: "Fragmento",
+      niche_sport: "Deportes",
+      niche_auto: "Autos",
+      genre_realism: "Realismo",
+      genre_fantasy: "Fantasía",
+      genre_cartoon: "Animación",
+      case_tag: "Caso extra",
+      case_heading: "Otro caso donde nuestros videos llegan solos a millones de vistas",
+      case_niche: "nicho farmacéutico",
+      alt_cardiodok: "Captura del perfil de @cardiodok en Instagram",
+      process_h2: "Cómo trabajamos",
+      process1_n: "Concepto", process1_h3: "Desarrollamos la idea",
+      process1_p: "Conocemos tu producto, tu audiencia y el estilo. Escribimos la historia y el concepto, y acordamos las referencias — antes de empezar a generar.",
+      process2_n: "Generación", process2_h3: "Creamos el visual",
+      process2_p: "Generamos imágenes adaptadas a tu producto y tu marca, y luego el video a partir de ellas.",
+      process3_n: "Edición y sonido", process3_h3: "Armamos el video",
+      process3_p: "Editamos, hacemos corrección de color, y seleccionamos y mezclamos el sonido.",
+      process4_n: "Ajustes y entrega", process4_h3: "Lo pulimos al máximo",
+      process4_p: "Hacemos los ajustes según tus comentarios y entregamos el video terminado en el formato que necesites.",
+      process_note: "Nos adaptamos a plazos ajustados. Trabajamos con pago por adelantado.",
+      formats_h2: "Formas de colaborar",
+      formats_sub: "Las condiciones son flexibles y dependen del volumen de trabajo — las definimos de forma personalizada para tu proyecto.",
+      format1_tag: "Llave en mano", format1_h3: "Nos encargamos del proyecto completo",
+      format1_li1: "Desde un solo video hasta cubrir todo un flujo de tareas",
+      format1_li2: "Nos hacemos responsables de la ejecución y el control de calidad",
+      format1_li3: "Llevamos el proyecto desde la idea hasta el resultado final",
+      format2_tag: "Equipo externo", format2_h3: "Aportamos especialistas para tu tarea",
+      format2_li1: "Aportamos creadores para tus necesidades específicas",
+      format2_li2: "El formato y el volumen de trabajo se acuerdan de forma individual",
+      format2_li3: "Escalamos el equipo de forma flexible según tu proyecto",
+      trust_note_html: 'Detrás de nosotros están <b><a href="https://yavneuro.ru" target="_blank" rel="noopener" class="trust-name-link">«Я В НЕЙРО!»</a></b> y <b><a href="https://neuromobil.ru" target="_blank" rel="noopener" class="trust-name-link">NEUROMOBIL</a></b> — también enseñamos a crear videos así',
+      cta_h2: "Cuéntanos qué resultado quieres",
+      cta_p: "Te responderemos rápido y te propondremos el formato ideal para tu proyecto",
+      cta_btn_telegram: "Escríbenos por Telegram",
+      cta_btn_whatsapp: "Escríbenos por WhatsApp"
+    }
+  };
+
+  const metaDescEl = document.querySelector('meta[name="description"]');
+  const langOverlay = document.getElementById('langOverlay');
+
+  function applyLanguage(lang){
+    const dict = translations[lang];
+    if(!dict) return;
+    document.documentElement.lang = lang;
+    document.title = dict.meta_title;
+    if(metaDescEl) metaDescEl.setAttribute('content', dict.meta_desc);
+
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      if(dict[key] !== undefined) el.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+      const key = el.getAttribute('data-i18n-html');
+      if(dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-attr]').forEach(el=>{
+      const spec = el.getAttribute('data-i18n-attr').split(':');
+      const attr = spec[0], key = spec[1];
+      if(dict[key] !== undefined) el.setAttribute(attr, dict[key]);
+    });
+    document.querySelectorAll('.lang-switch-btn').forEach(btn=>{
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    try{ localStorage.setItem('nn_lang', lang); }catch(e){}
+  }
+
+  function chooseLanguage(lang){
+    applyLanguage(lang);
+    langOverlay.classList.remove('open');
+  }
+
+  document.querySelectorAll('.lang-btn, .lang-switch-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=> chooseLanguage(btn.getAttribute('data-lang')));
+  });
+
+  let savedLang = null;
+  try{ savedLang = localStorage.getItem('nn_lang'); }catch(e){}
+  if(savedLang && translations[savedLang]){
+    applyLanguage(savedLang);
+  } else {
+    langOverlay.classList.add('open');
+  }
 </script>
 
 </body>
