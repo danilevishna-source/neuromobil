@@ -18,7 +18,7 @@
       heading: 'LET’S CREATE YOUR STORY', routes: 'Custom content, portfolio and training',
       date: 'STARTS SEPTEMBER 28', course: 'Create AI content on your phone',
       courseDescription: '10 days. Just your phone. Lifetime access. Tap to sign up.',
-      notice: 'Intensive course taught in Russian only',
+      notice: 'The intensive course is in Russian for now. We’re preparing a guide in English — announcement coming soon!',
       content: 'Content made for you', contentDescription: 'Animation, realism, fantasy — we bring your story to life in any genre.',
       portfolio: 'Our portfolio', portfolioDescription: 'Explore the stories we’ve brought to life',
       contact: 'GET IN TOUCH', whatsapp: 'Message us on WhatsApp', telegram: 'Message us on Telegram',
@@ -31,7 +31,7 @@
       heading: 'CREEMOS TU HISTORIA', routes: 'Contenido a medida, portafolio y formación',
       date: 'INICIO: 28 DE SEPTIEMBRE', course: 'Crea contenido con IA desde tu móvil',
       courseDescription: '10 días. Solo tu móvil. Acceso de por vida. Pulsa para inscribirte.',
-      notice: 'Curso intensivo impartido solo en ruso',
+      notice: 'Por ahora, el curso intensivo se imparte en ruso. Estamos preparando una guía en inglés. ¡La anunciaremos pronto!',
       content: 'Contenido a medida', contentDescription: 'Animación, realismo, fantasía: damos vida a tu historia en cualquier género.',
       portfolio: 'Nuestro portafolio', portfolioDescription: 'Descubre las historias que hemos creado',
       contact: 'CONTACTO', whatsapp: 'Escríbenos por WhatsApp', telegram: 'Escríbenos por Telegram',
@@ -98,6 +98,12 @@
     button.addEventListener('click', () => {
       const language = button.dataset.language;
       render(language);
+      const wasPending = document.body.classList.contains('language-pending');
+      document.body.classList.remove('language-pending');
+      if (wasPending) {
+        select('h1').setAttribute('tabindex', '-1');
+        select('h1').focus({ preventScroll: true });
+      }
       try { localStorage.setItem('neuromobil-us-language', language); } catch { /* Optional preference. */ }
       const url = new URL(location.href);
       url.searchParams.set('lang', language);
@@ -105,6 +111,7 @@
     });
   });
   render(currentLanguage());
+  document.body.classList.add('language-pending');
   select('.language-switch').hidden = false;
   window.addEventListener('popstate', () => render(currentLanguage()));
 })();
