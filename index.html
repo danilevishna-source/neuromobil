@@ -148,6 +148,17 @@
   </div>
 </section>
 
+<section class="principles" id="principles" aria-labelledby="principles-title">
+  <div class="wrap">
+    <article class="g g6">
+      <i class="ball b-white" style="width:100px;height:100px;right:-20px;top:-28px" aria-hidden="true"></i>
+      <span class="gic"><i class="ti ti-coin" aria-hidden="true"></i></span>
+      <h3 id="principles-title">Принципы, а не один сезон</h3>
+      <p>Мы учим основам, с которыми ты сможешь делать любой качественный контент, поймёшь, как зарабатывать на нём в любое время года, и как упаковать себя как специалиста.</p>
+    </article>
+  </div>
+</section>
+
 <section class="gifts sec" id="gifts">
   <div class="wrap">
     <div class="head">
@@ -155,13 +166,12 @@
       <h2 class="sec-h">Подарки, которые запомнят</h2>
       <p>Нейросети умеют не только мультики. К Новому году на телефоне можно собрать подарок, который не купишь в магазине. И те же навыки потом приносят заказы.</p>
     </div>
-    <div class="gg">
-      <article class="g g1"><span class="gic"><i class="ti ti-movie" aria-hidden="true"></i></span><h3>Видеооткрытка-поздравление</h3><p>Персонажи оживают и поздравляют родных. Вместо картинки из интернета у тебя своё видео с озвучкой на русском.</p></article>
-      <article class="g g2"><span class="gic"><i class="ti ti-photo-heart" aria-hidden="true"></i></span><h3>Старые фото оживают</h3><p>Снимок бабушки, детское фото, семейный портрет. Анимация превращает их в короткое видео.</p></article>
-      <article class="g g3"><span class="gic"><i class="ti ti-mood-kid" aria-hidden="true"></i></span><h3>Мультфильм про вас</h3><p>Мини-мультик, где герои — твоя семья или друзья. Мультики лишь один из форматов.</p></article>
-      <article class="g g4"><span class="gic"><i class="ti ti-video" aria-hidden="true"></i></span><h3>Видео на память в реализме</h3><p>Тёплые моменты года в живом, реалистичном видео.</p></article>
-      <article class="g g5"><span class="gic"><i class="ti ti-music" aria-hidden="true"></i></span><h3>Песня и озвучка для подарка</h3><p>Собственный трек и озвучка, которые делают поздравление по-настоящему личным.</p></article>
-      <article class="g g6"><span class="gic"><i class="ti ti-coin" aria-hidden="true"></i></span><h3>Принципы, а не один сезон</h3><p>Мы учим основам, с которыми ты сможешь делать любой качественный контент, поймёшь, как зарабатывать на нём в любое время года, и как упаковать себя как специалиста.</p></article>
+    <div class="gift-gallery">
+      <div class="gift-art"><img src="images/presents/cutouts/greeting.png" alt="Видеооткрытка-поздравление" width="1254" height="1254" loading="lazy" decoding="async"></div>
+      <div class="gift-art"><img src="images/presents/cutouts/old-photos.png" alt="Старые фото оживают" width="1254" height="1254" loading="lazy" decoding="async"></div>
+      <div class="gift-art"><img src="images/presents/cutouts/memories.png" alt="Видео на память" width="1254" height="1254" loading="lazy" decoding="async"></div>
+      <div class="gift-art"><img src="images/presents/cutouts/song.png" alt="Песня в подарок" width="1254" height="1254" loading="lazy" decoding="async"></div>
+      <div class="gift-art"><img src="images/presents/cutouts/family-cartoon.png" alt="Мультфильм про вас и вашу семью" width="1254" height="1254" loading="lazy" decoding="async"></div>
     </div>
   </div>
 </section>
@@ -328,6 +338,29 @@
 (function(){
   var calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
 
+  /* Подарки появляются по очереди при прокрутке. */
+  var giftGallery=document.querySelector('.gift-gallery');
+  if(giftGallery&&!calm&&'IntersectionObserver' in window){
+    var giftObserver=new IntersectionObserver(function(entries){
+      var visible=entries.filter(function(entry){return entry.isIntersecting});
+      visible.forEach(function(entry,i){
+        entry.target.style.transitionDelay=(i*170)+'ms';
+        entry.target.classList.add('is-visible');
+        giftObserver.unobserve(entry.target);
+      });
+    },{threshold:0.15});
+    giftGallery.classList.add('will-reveal');
+    giftGallery.querySelectorAll('.gift-art').forEach(function(item){giftObserver.observe(item)});
+
+    var giftFocusObserver=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        entry.target.classList.toggle('is-centered',entry.isIntersecting);
+      });
+    },{rootMargin:'-35% 0px -35% 0px',threshold:0});
+    giftGallery.querySelectorAll('.gift-art').forEach(function(item){giftFocusObserver.observe(item)});
+  }
+
+
   /* снег */
   var sn=document.getElementById('snow');
   if(sn&&!calm){
@@ -393,7 +426,7 @@
 <script>
 (function(){
   /* ---------- Payment modal (перенесено со старого сайта) ---------- */
-  var PAYMENT_LINK = "https://payform.ru/5pcTVdP/";
+  var PAYMENT_LINK = "https://payform.ru/nacVKjD";
   var overlay = document.getElementById('modalOverlay');
   var closeBtn = document.getElementById('modalClose');
   var payBtn = document.getElementById('modalPayBtn');
