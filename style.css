@@ -265,6 +265,7 @@ footer .legal{margin-top:40px;padding-top:20px;border-top:1px solid rgba(27,31,3
   .g,.day,.it{border-radius:30px;padding:28px 24px}
   .d3 .dots{grid-template-columns:1fr}
   .bonus .box,.kassa .stage2{border-radius:36px;padding:36px 22px}
+  .bonus .box>.ball.b-berry{display:none}
   .kassa .stage2{grid-template-columns:1fr;gap:32px}
   .kassa .stage2>.ball.b-black{display:none}
   .kassa .lc{min-height:0;display:flex;flex-direction:column;align-items:flex-start}
