@@ -314,3 +314,71 @@ footer .legal{margin-top:40px;padding-top:20px;border-top:1px solid rgba(27,31,3
 /* ===== footer legal links (перенесено со старого сайта) ===== */
 .legal-links{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px}
 .legal-links a{color:var(--mint-d);font-weight:600;text-decoration:underline}
+
+/* Чёрная пятница: акцент на акции, исходное оформление потока сохранено. */
+.bf-topline{display:flex;justify-content:center;align-items:center;gap:24px;padding:12px 20px;margin-bottom:14px;background:var(--ink);color:#e5f5bd;text-decoration:none;font-size:14px;line-height:1.4;text-align:center}
+.bf-topline strong{letter-spacing:.08em}
+.bf-promo{padding-top:30px;scroll-margin-top:100px}
+.bf-card{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:1.15fr 1fr;gap:36px;padding:44px 54px 102px;border-radius:40px;background:#191e1b;color:#fff;box-shadow:0 24px 48px -32px #1b1f1e}
+.bf-card:before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(ellipse at 90% 0,rgba(168,200,191,.16),transparent 60%);pointer-events:none}
+.bf-copy{align-self:center}
+.bf-eyebrow{display:inline-block;margin-bottom:20px;color:#d9edb8;font-size:14px;font-weight:600;letter-spacing:.04em}
+.bf-copy h2{font-size:clamp(38px,5.5vw,74px);line-height:.98;letter-spacing:-.045em;margin-bottom:22px}
+.bf-copy p{font-size:18px;line-height:1.5;color:#d5ded7}
+.bf-offer{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-width:0}
+.bf-saving{display:inline-block;border:1px solid #b2c789;border-radius:999px;padding:5px 13px;color:#e5f5bd;font-size:13px;font-weight:600}
+.bf-prices{margin:12px 0 18px}
+.bf-prices del{display:block;color:#aeb9b2;font-size:24px;text-decoration-thickness:2px}
+.bf-prices strong{display:block;font:800 clamp(58px,7vw,88px)/1.1 var(--head);letter-spacing:-.05em;white-space:nowrap;color:#e5f5bd}
+.bf-prices strong span{font-size:.7em}
+.bf-code{display:flex;align-items:center;justify-content:space-between;gap:18px;width:100%;max-width:330px;padding:12px 16px;border:1px dashed #95aa9c;border-radius:12px;background:transparent;color:inherit;cursor:pointer;font-family:var(--text);user-select:text}
+.bf-code span{font-size:11px;letter-spacing:.08em}
+.bf-code b{font:700 23px/1.2 var(--head);letter-spacing:.06em}
+.bf-code i{font-size:20px}
+.bf-code:hover{background:rgba(168,200,191,.15)}
+.bf-code:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+.bf-cta{justify-content:space-between;width:100%;max-width:330px;margin-top:14px;padding:18px 20px;background:#e5f5bd;color:#191e1b;font-size:15px;line-height:1.3;box-shadow:0 8px 24px -14px #e5f5bd}
+.bf-cta:hover{transform:translateY(-2px)}
+.bf-terms{font-size:12px;line-height:1.5;color:#bdc9c0;margin-top:12px}
+.bf-tape{position:absolute;bottom:23px;left:-2%;width:104%;transform:rotate(-2deg);background:#e5f5bd;color:#191e1b;padding:12px 0;overflow:hidden;border-block:1px solid #191e1b}
+.bf-tape span{display:block;white-space:nowrap;font:700 16px/1.2 var(--head);letter-spacing:.09em;word-spacing:12px}
+.bf-hero-note{font-size:14px;line-height:1.6;margin:0 0 18px;color:#233a30}
+.bf-hero-note strong{font-size:16px}
+.bf-ticket-label{display:block;font:600 13px/1.5 var(--text);color:var(--mint-d);margin-bottom:16px}
+.bf-old-price{display:block;color:var(--muted);font-size:24px;text-decoration-thickness:2px;margin-bottom:6px}
+.ticket .bf-ticket-terms{color:var(--ink);font-size:14px;margin-bottom:20px}
+.bf-ticket-terms strong{display:inline-block;background:#e5f5bd;padding:2px 8px;border-radius:6px}
+.modal-price del{font:500 20px var(--text);color:#40594f;margin-right:8px;white-space:nowrap}
+.bf-modal-promo{margin-bottom:22px;font-size:14px}
+.bf-modal-promo p{margin-bottom:12px}
+.bf-modal-promo .bf-code{max-width:none}
+.bf-copy-status{position:fixed;bottom:120px;left:50%;transform:translateX(-50%);z-index:110;width:max-content;max-width:calc(100% - 32px);border-radius:16px;padding:14px 20px;background:var(--ink);color:#fff;font-size:14px;box-shadow:0 8px 30px #0003;visibility:hidden;opacity:0;transition:opacity .2s}
+.bf-copy-status.visible{visibility:visible;opacity:1}
+@media(max-width:900px){
+  .bf-card{gap:24px;padding:36px 30px 96px}
+  .bf-copy h2{font-size:clamp(36px,5.5vw,56px)}
+}
+@media(max-width:600px){
+  .bf-topline{gap:4px 12px;flex-wrap:wrap;font-size:11px;padding:10px 12px}
+  .bf-topline strong{font-size:12px}.bf-topline>span:last-child{display:none}
+  .bf-promo{padding-top:22px}
+  .bf-card{grid-template-columns:1fr;padding:28px 24px 88px;gap:24px;border-radius:30px}
+  .bf-eyebrow{font-size:12px;margin-bottom:16px}
+  .bf-copy h2{font-size:clamp(40px,11vw,62px);margin-bottom:14px}
+  .bf-copy p{font-size:16px}
+  .bf-prices{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:12px 0 18px}
+  .bf-prices del{font-size:20px}.bf-prices strong{font-size:58px}
+  .bf-code,.bf-cta{max-width:none}
+  .bf-tape span{font-size:13px}.bf-tape{bottom:20px}
+  .bf-hero-note strong{font-size:15px}
+}
+
+/* Лента занимает отдельную полосу над содержимым hero. */
+.hero .stage{padding-top:132px}
+.bf-hero-tape{position:absolute;top:54px;left:-2%;width:104%;z-index:3;transform:rotate(-2deg);overflow:hidden;padding:12px 0;background:var(--ink);color:#e5f5bd;pointer-events:none}
+.bf-hero-tape span{display:block;white-space:nowrap;font:700 15px/1.3 var(--head);letter-spacing:.08em;word-spacing:10px}
+@media(max-width:900px){
+  .hero .stage{padding-top:122px}
+  .bf-hero-tape{top:50px}
+  .bf-hero-tape span{font-size:13px}
+}
