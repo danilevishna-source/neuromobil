@@ -2,7 +2,7 @@
   const copy = {
     ru: {
       brand: 'НЕЙРОМОБИЛЬ', tagline: 'ИДЕИ. НЕЙРОСЕТИ. ТВОРЧЕСТВО.', intro: 'Твой маршрут в мир нейро.',
-      hero: 'Из идеи — в историю', image: 'Фирменный мятный кабриолет НЕЙРОМОБИЛЬ',
+      hero: 'Из идеи — в историю', image: 'Марина в новогоднем мятном кабриолете с подарками',
       heading: 'ВЫБЕРИ СВОЙ МАРШРУТ', routes: 'Обучение, контент на заказ и портфолио',
       date: 'СТАРТ 7 ДЕКАБРЯ', course: 'Мастер-класс по созданию нейро-контента с телефона',
       courseDescription: '10 дней. Только телефон. Доступ навсегда. Жми чтобы зарегистрироваться', notice: '',
@@ -14,7 +14,7 @@
     },
     en: {
       brand: 'NEUROMOBIL', tagline: 'IDEAS. AI. CREATIVITY.', intro: 'Your route into the world of AI.',
-      hero: 'From an idea to a story', image: 'NEUROMOBIL’s signature mint convertible',
+      hero: 'From an idea to a story', image: 'Marina in a festive mint convertible with gifts',
       heading: 'LET’S CREATE YOUR STORY', routes: 'Custom content, portfolio and training',
       date: 'STARTS DECEMBER 7', course: 'Masterclass: create AI content on your phone',
       courseDescription: '10 days. Just your phone. Lifetime access. Tap to sign up.',
@@ -29,7 +29,7 @@
     },
     es: {
       brand: 'NEUROMOBIL', tagline: 'IDEAS. IA. CREATIVIDAD.', intro: 'Tu ruta al mundo de la IA.',
-      hero: 'De una idea a una historia', image: 'El emblemático descapotable verde menta de NEUROMOBIL',
+      hero: 'De una idea a una historia', image: 'Marina en un descapotable verde menta navideño con regalos',
       heading: 'CREEMOS TU HISTORIA', routes: 'Contenido a medida, portafolio y formación',
       date: 'INICIO: 7 DE DICIEMBRE', course: 'Clase magistral: crea contenido con IA desde tu móvil',
       courseDescription: '10 días. Solo tu móvil. Acceso de por vida. Pulsa para inscribirte.',
@@ -65,6 +65,7 @@
     setText('.routes .section-heading span', text.heading);
     select('.routes').setAttribute('aria-label', text.routes);
     setLabel('.tag', text.date);
+    setText('.season-label', { ru: 'Новогодний поток', en: 'Holiday edition', es: 'Edición navideña' }[language]);
     setText('#intensive .card-title', text.course);
     setText('#intensive .card-description', text.courseDescription);
     setText('.course-language', text.notice);
@@ -107,12 +108,6 @@
     button.addEventListener('click', () => {
       const language = button.dataset.language;
       render(language);
-      const wasPending = document.body.classList.contains('language-pending');
-      document.body.classList.remove('language-pending');
-      if (wasPending) {
-        select('h1').setAttribute('tabindex', '-1');
-        select('h1').focus({ preventScroll: true });
-      }
       try { localStorage.setItem('neuromobil-us-language', language); } catch { /* Optional preference. */ }
       const url = new URL(location.href);
       url.searchParams.set('lang', language);
@@ -120,7 +115,6 @@
     });
   });
   render(currentLanguage());
-  document.body.classList.add('language-pending');
   select('.language-switch').hidden = false;
   window.addEventListener('popstate', () => render(currentLanguage()));
 })();
