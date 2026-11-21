@@ -109,6 +109,12 @@
     button.addEventListener('click', () => {
       const language = button.dataset.language;
       render(language);
+      const wasPending = document.body.classList.contains('language-pending');
+      document.body.classList.remove('language-pending');
+      if (wasPending) {
+        select('h1').setAttribute('tabindex', '-1');
+        select('h1').focus({ preventScroll: true });
+      }
       try { localStorage.setItem('neuromobil-us-language', language); } catch { /* Optional preference. */ }
       const url = new URL(location.href);
       url.searchParams.set('lang', language);
