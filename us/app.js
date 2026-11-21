@@ -57,6 +57,7 @@
     document.title = `${text.brand} · ${text.intro}`;
     select('meta[name="description"]').content = text.description;
     setText('h1', text.brand);
+    setText('.team-credit > span', { ru: 'от команды', en: 'by the team at', es: 'del equipo de' }[language]);
     setLabel('.brand-line', text.tagline);
     setText('.intro', text.intro);
     setLabel('.hero-label', text.hero);
