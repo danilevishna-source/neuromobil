@@ -18,7 +18,9 @@
       heading: 'LET’S CREATE YOUR STORY', routes: 'Custom content, portfolio and training',
       date: 'STARTS DECEMBER 7', course: 'Masterclass: create AI content on your phone',
       courseDescription: '10 days. Just your phone. Lifetime access. Tap to sign up.',
-      notice: 'The masterclass is in Russian for now. We’re preparing a guide in English — announcement coming soon!',
+      notice: 'The masterclass is in Russian. Our AI cartoon guide is available in English below.',
+      guideLanguage: 'ENGLISH GUIDE · $20', guide: 'Get the guide: Your First AI Cartoon',
+      guideDescription: 'Step-by-step text & video, 2 AI helper bots and 16 cartoon styles. Instant access after payment.',
       content: 'Content made for you', contentDescription: 'Animation, realism, fantasy — we bring your story to life in any genre.',
       portfolio: 'Our portfolio', portfolioDescription: 'Explore the stories we’ve brought to life',
       contact: 'GET IN TOUCH', whatsapp: 'Message us on WhatsApp', telegram: 'Message us on Telegram',
@@ -31,7 +33,9 @@
       heading: 'CREEMOS TU HISTORIA', routes: 'Contenido a medida, portafolio y formación',
       date: 'INICIO: 7 DE DICIEMBRE', course: 'Clase magistral: crea contenido con IA desde tu móvil',
       courseDescription: '10 días. Solo tu móvil. Acceso de por vida. Pulsa para inscribirte.',
-      notice: 'Por ahora, la clase magistral se imparte en ruso. Estamos preparando una guía en inglés. ¡La anunciaremos pronto!',
+      notice: 'La clase magistral se imparte en ruso. Nuestra guía de animación con IA ya está disponible en inglés más abajo.',
+      guideLanguage: 'GUÍA EN INGLÉS · 20 USD', guide: 'Compra la guía: Tu primera animación con IA',
+      guideDescription: 'Texto y vídeos paso a paso, 2 bots de ayuda con IA y 16 estilos de animación. Acceso inmediato tras el pago. La guía está en inglés.',
       content: 'Contenido a medida', contentDescription: 'Animación, realismo, fantasía: damos vida a tu historia en cualquier género.',
       portfolio: 'Nuestro portafolio', portfolioDescription: 'Descubre las historias que hemos creado',
       contact: 'CONTACTO', whatsapp: 'Escríbenos por WhatsApp', telegram: 'Escríbenos por Telegram',
@@ -64,6 +68,10 @@
     setText('#intensive .card-description', text.courseDescription);
     setText('.course-language', text.notice);
     select('.course-language').hidden = language === 'ru';
+    select('#guide').hidden = language === 'ru';
+    setText('#guide .guide-language', text.guideLanguage || '');
+    setText('#guide .card-title', text.guide || '');
+    setText('#guide .card-description', text.guideDescription || '');
     setText('#content .card-title', text.content);
     setText('#content .card-description', text.contentDescription);
     setText('#portfolio .card-title', text.portfolio);
@@ -78,7 +86,7 @@
     select('#intensive').classList.toggle('course-muted', language !== 'ru');
     select('#content').classList.toggle('content-featured', language !== 'ru');
     select('#portfolio').classList.toggle('portfolio-featured', language !== 'ru');
-    const order = language === 'ru' ? ['intensive', 'content', 'portfolio'] : ['content', 'portfolio', 'intensive'];
+    const order = language === 'ru' ? ['intensive', 'guide', 'content', 'portfolio'] : ['content', 'portfolio', 'intensive', 'guide'];
     order.forEach(id => select('.routes').append(select(`#${id}`)));
     setText('.card-number', language === 'ru' ? '01' : '03');
     document.querySelectorAll('[data-language]').forEach(button => {
