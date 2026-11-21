@@ -6,6 +6,8 @@
 
 .instagram-links{grid-template-columns:repeat(2,minmax(0,1fr))}.instagram-card{min-width:0;min-height:58px;padding:16px 14px;gap:8px;border:2px solid transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(115deg,#833ab4,#c13584 40%,#e1306c 65%,#f77737 85%,#fcaf45) border-box;color:var(--text);box-shadow:none}.instagram-card .card-title{font-size:13px;font-weight:500;white-space:nowrap}.instagram-card .arrow{color:var(--text);font-size:18px}.instagram-card:hover{border-color:transparent;background:linear-gradient(#342b25,#342b25) padding-box,linear-gradient(115deg,#833ab4,#c13584 40%,#e1306c 65%,#f77737 85%,#fcaf45) border-box}.instagram-card:focus-visible{outline-color:var(--text)}@media(max-width:360px){.instagram-card{padding:14px 8px;gap:4px}.instagram-card .card-title{font-size:11px}.instagram-card .arrow{font-size:14px}}
 
+.guide-card{border-color:var(--gold)}.guide-card .card-copy{min-width:0}.guide-card .card-title{font-weight:750}.guide-description{font-size:14px;font-weight:700;line-height:1.5;color:var(--muted)}
+
 .language-flag{font-size:18px;line-height:1;letter-spacing:0;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
 
 .brand-mark{overflow:hidden;isolation:isolate;border:0}.brand-mark img{position:absolute;left:-15%;top:-13%;display:block;width:130%;height:130%;max-width:none;object-fit:cover;object-position:center;border-radius:0}.brand-mark:after{content:"";position:absolute;inset:0;border:1px solid #8b6f4760;border-radius:inherit;pointer-events:none}.brand-mark i{right:4px;bottom:4px}
