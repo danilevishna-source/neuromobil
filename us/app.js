@@ -70,6 +70,7 @@
     setText('#intensive .card-description', text.courseDescription);
     setText('.course-language', text.notice);
     select('.course-language').hidden = language === 'ru';
+    select('#intensive').hidden = language !== 'ru';
     select('#guide').hidden = language === 'ru';
     setText('#guide .guide-language', text.guideLanguage || '');
     setText('#guide .card-title', text.guide || '');
@@ -86,9 +87,9 @@
     select('.language-switch').setAttribute('aria-label', text.language);
     select('#intensive').classList.toggle('featured', language === 'ru');
     select('#intensive').classList.toggle('course-muted', language !== 'ru');
-    select('#content').classList.toggle('content-featured', language !== 'ru');
+    select('#content').classList.remove('content-featured');
     select('#portfolio').classList.toggle('portfolio-featured', language !== 'ru');
-    const order = language === 'ru' ? ['intensive', 'guide', 'content', 'portfolio'] : ['content', 'portfolio', 'intensive', 'guide'];
+    const order = language === 'ru' ? ['intensive', 'guide', 'content', 'portfolio'] : ['guide', 'content', 'portfolio', 'intensive'];
     order.forEach(id => select('.routes').append(select(`#${id}`)));
     setText('.card-number', language === 'ru' ? '01' : '03');
     document.querySelectorAll('[data-language]').forEach(button => {
